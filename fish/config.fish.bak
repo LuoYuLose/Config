@@ -1,0 +1,9 @@
+if status is-interactive
+    # Commands to run in interactive sessions can go here
+
+    # 问候语
+    function fish_greeting
+      glow /home/luoyu/待办/四月.md
+      echo '请问今天要来点什么？'
+    end
+end
