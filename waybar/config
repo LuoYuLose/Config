@@ -28,7 +28,8 @@
 	"network": {
 		"tooltip": false,
 		"format-wifi": "  {essid}",
-		"format-ethernet": ""
+		"format-ethernet": "",
+    "format-disconnected": "无网络连接喵"
 	},
 
 	"backlight": {

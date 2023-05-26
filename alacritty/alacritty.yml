@@ -1,0 +1,19 @@
+title: MyOwnTermial
+dynamic_title: true
+
+tabspaces: 4
+
+font: 
+  size: 18
+  normal:
+    family: Source Code Pro
+    style: Semibold
+  bold:
+    family: Source Code Pro
+    style: Bold
+  italic:
+    family: Source Code Pro
+    style: Semibold Italic
+  bold_italic:
+    family: Source Code Pro
+    style: Bold Italic
