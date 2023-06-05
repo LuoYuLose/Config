@@ -11,7 +11,12 @@
 # Note: the "Super" modifier is also known as Logo, GUI, Windows, Mod4, etc.
 
 # 自启动 
-riverctl spawn "mpvpaper -o "no-audio loop-file shuffle panscan=1.0 no-keepaspect no-input-default-bindings hwdec" '*' /home/luoyu/WallPapers/动态壁纸/"
+mpvpaper -o "no-audio loop-file shuffle panscan=1.0 no-keepaspect no-input-default-bindings hwdec" '*' /home/luoyu/WallPapers/动态壁纸/
+numlockx on
+waybar
+fcitx5 -5
+
+# riverctl spawn "~/.config/river/autostart.sh"
 
 # Super+Shift+Return to start an instance of foot (https://codeberg.org/dnkl/foot)
 riverctl map normal Super Return spawn kitty
@@ -20,7 +25,18 @@ riverctl map normal Super Return spawn kitty
 riverctl map normal Super Q close
 
 # Super+Shift+E to exit river
-riverctl map normal Super+Shift E exit
+# riverctl map normal Super+Shift E exit
+ 
+# AppManage
+# wlogout
+riverctl map normal Super X spawn wlogout
+
+# Firefox
+riverctl map normal Super F1 spawn firefox
+
+# Music
+riverctl map normal Super M spawn /opt/YesPlayMusic/yesplaymusic
+riverctl map normal Super+Shift M spawn qqmusic
 
 # Super+J and Super+K to focus the next/previous view in the layout stack
 riverctl map normal Super J focus-view next
@@ -162,4 +178,6 @@ riverctl rule-add csd -app-id "bar"
 # Set the default layout generator to be rivertile and start it.
 # River will send the process group of the init executable SIGTERM on exit.
 riverctl default-layout rivertile
-rivertile -view-padding 6 -outer-padding 6 &
+# rivertile -view-padding 6 -outer-padding 6 &
+# 取代上一条rivertile，上一条命令可能导致自启动失效
+riverctl spawn "rivertile -view-padding 6 -outer-padding 6"

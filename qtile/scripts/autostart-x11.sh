@@ -26,18 +26,12 @@ xfce4-power-manager
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 picom -b  --config ~/.config/picom/picom.conf &
 numlockx on
-# sxhkd -c ~/.config/arco-dwm/sxhkd/sxhkdrc &
-#run "nitrogen --restore"
-# run "conky -c $HOME/.config/arco-dwm/system-overview"
-# you can set wallpapers in themes as well
-# feh --bg-fill /usr/share/backgrounds/archlinux/arch-wallpaper.jpg &
-# feh --bg-fill /usr/share/backgrounds/arcolinux/arco-wallpaper.jpg &
-#wallpaper for other Arch based systems
-#feh --bg-fill /usr/share/archlinux-tweak-tool/data/wallpaper/wallpaper.png &
-#run applications from startup
 
 # Video Wallpaper
 /home/luoyu/WallPapers/LaunchVideoWallpaper.sh
+
+# Polybar
+/home/luoyu/.config/polybar/launch.sh
 
 fcitx5 -d
 #run "insync start"
