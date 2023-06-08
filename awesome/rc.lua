@@ -18,12 +18,28 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
+-- 自动启动
+autorun = true
+autorunApps = 
+{ 
+    "picom -b  --config ~/.config/picom/picom.conf &",
+    "/home/luoyu/WallPapers/LaunchVideoWallpaper.sh",
+    "numlockx on",
+    "fcitx5 -d",
+    "/opt/qq2012/wineapp/qq/qq.sh",
+}
+
+if autorun then
+    for app = 1, #autorunApps do
+        awful.util.spawn_with_shell(autorunApps[app])
+    end
+end
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
 if awesome.startup_errors then
     naughty.notify({ preset = naughty.config.presets.critical,
-                     title = "Oops, there were errors during startup!",
+                     title = "启动失败了喵",
                      text = awesome.startup_errors })
 end
 
@@ -36,7 +52,7 @@ do
         in_error = true
 
         naughty.notify({ preset = naughty.config.presets.critical,
-                         title = "Oops, an error happened!",
+                         title = "有错误喵",
                          text = tostring(err) })
         in_error = false
     end)
@@ -48,8 +64,8 @@ end
 beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "xterm"
-editor = os.getenv("EDITOR") or "nano"
+terminal = "kitty"
+editor = os.getenv("EDITOR") or "nvim"
 editor_cmd = terminal .. " -e " .. editor
 
 -- Default modkey.
