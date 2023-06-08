@@ -24,9 +24,9 @@ autorunApps =
 { 
     "picom -b  --config ~/.config/picom/picom.conf &",
     "/home/luoyu/WallPapers/LaunchVideoWallpaper.sh",
+    "$HOME/.config/polybar/launch.sh --forest",
     "numlockx on",
     "fcitx5 -d",
-    "/opt/qq2012/wineapp/qq/qq.sh",
 }
 
 if autorun then
@@ -34,6 +34,8 @@ if autorun then
         awful.util.spawn_with_shell(autorunApps[app])
     end
 end
+
+-- 错误信息反馈
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -121,6 +123,7 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 -- Keyboard map indicator and switcher
 mykeyboardlayout = awful.widget.keyboardlayout()
 
+-- 应该是AwesomeBar，暂时禁用
 -- {{{ Wibar
 -- Create a textclock widget
 mytextclock = wibox.widget.textclock()
@@ -211,8 +214,9 @@ awful.screen.connect_for_each_screen(function(s)
         buttons = tasklist_buttons
     }
 
+    -- 隐藏Wibox
     -- Create the wibox
-    s.mywibox = awful.wibar({ position = "top", screen = s })
+    -- s.mywibox = awful.wibar({ position = "top", screen = s })
 
     -- Add widgets to the wibox
     s.mywibox:setup {
@@ -352,7 +356,7 @@ clientkeys = gears.table.join(
             c:raise()
         end,
         {description = "toggle fullscreen", group = "client"}),
-    awful.key({ modkey, "Shift"   }, "c",      function (c) c:kill()                         end,
+    awful.key({ modkey,           }, "q",      function (c) c:kill()                         end,
               {description = "close", group = "client"}),
     awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle                     ,
               {description = "toggle floating", group = "client"}),
@@ -506,7 +510,7 @@ awful.rules.rules = {
 
     -- Add titlebars to normal clients and dialogs
     { rule_any = {type = { "normal", "dialog" }
-      }, properties = { titlebars_enabled = true }
+      }, properties = { titlebars_enabled = false }
     },
 
     -- Set Firefox to always map on the tag named "2" on screen 1.
