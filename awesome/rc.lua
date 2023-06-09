@@ -81,17 +81,17 @@ modkey = "Mod4"
 awful.layout.layouts = {
     awful.layout.suit.floating,
     awful.layout.suit.tile,
-    awful.layout.suit.tile.left,
-    awful.layout.suit.tile.bottom,
-    awful.layout.suit.tile.top,
-    awful.layout.suit.fair,
-    awful.layout.suit.fair.horizontal,
-    awful.layout.suit.spiral,
-    awful.layout.suit.spiral.dwindle,
-    awful.layout.suit.max,
+    -- awful.layout.suit.tile.left,
+    -- awful.layout.suit.tile.bottom,
+    -- awful.layout.suit.tile.top,
+    -- awful.layout.suit.fair,
+    -- awful.layout.suit.fair.horizontal,
+    -- awful.layout.suit.spiral,
+    -- awful.layout.suit.spiral.dwindle,
+    -- awful.layout.suit.max,
     awful.layout.suit.max.fullscreen,
-    awful.layout.suit.magnifier,
-    awful.layout.suit.corner.nw,
+    -- awful.layout.suit.magnifier,
+    -- awful.layout.suit.corner.nw,
     -- awful.layout.suit.corner.ne,
     -- awful.layout.suit.corner.sw,
     -- awful.layout.suit.corner.se,
@@ -100,30 +100,29 @@ awful.layout.layouts = {
 
 -- {{{ Menu
 -- Create a launcher widget and a main menu
-myawesomemenu = {
-   { "hotkeys", function() hotkeys_popup.show_help(nil, awful.screen.focused()) end },
-   { "manual", terminal .. " -e man awesome" },
-   { "edit config", editor_cmd .. " " .. awesome.conffile },
-   { "restart", awesome.restart },
-   { "quit", function() awesome.quit() end },
-}
+-- myawesomemenu = {
+--     { "hotkeys", function() hotkeys_popup.show_help(nil, awful.screen.focused()) end },
+--     { "manual", terminal .. " -e man awesome" },
+--     { "edit config", editor_cmd .. " " .. awesome.conffile },
+--     { "restart", awesome.restart },
+--     { "quit", function() awesome.quit() end },
+--  }
+--  
+--  mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
+--                                      { "open terminal", terminal }
+--                                    }
+--                          })
+--  
+--  mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
+--                                       menu = mymainmenu })
+--  
+--  -- Menubar configuration
+--  menubar.utils.terminal = terminal -- Set the terminal for applications that require it
+--  -- }}}
+--  
+--  -- Keyboard map indicator and switcher
+--  mykeyboardlayout = awful.widget.keyboardlayout()
 
-mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
-                                    { "open terminal", terminal }
-                                  }
-                        })
-
-mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
-                                     menu = mymainmenu })
-
--- Menubar configuration
-menubar.utils.terminal = terminal -- Set the terminal for applications that require it
--- }}}
-
--- Keyboard map indicator and switcher
-mykeyboardlayout = awful.widget.keyboardlayout()
-
--- 应该是AwesomeBar，暂时禁用
 -- {{{ Wibar
 -- Create a textclock widget
 mytextclock = wibox.widget.textclock()
@@ -214,9 +213,9 @@ awful.screen.connect_for_each_screen(function(s)
         buttons = tasklist_buttons
     }
 
-    -- 隐藏Wibox
     -- Create the wibox
-    -- s.mywibox = awful.wibar({ position = "top", screen = s })
+    -- 禁用Wibar
+    s.mywibox = awful.wibar({ position = "top", screen = s, visible = false})
 
     -- Add widgets to the wibox
     s.mywibox:setup {
@@ -237,14 +236,6 @@ awful.screen.connect_for_each_screen(function(s)
         },
     }
 end)
--- }}}
-
--- {{{ Mouse bindings
-root.buttons(gears.table.join(
-    awful.button({ }, 3, function () mymainmenu:toggle() end),
-    awful.button({ }, 4, awful.tag.viewnext),
-    awful.button({ }, 5, awful.tag.viewprev)
-))
 -- }}}
 
 -- {{{ Key bindings
