@@ -2,7 +2,7 @@
 
 pkill polybar
 
-sleep 0.1
+sleep 0.5
 
 $HOME/WallPapers/LaunchVideoWallpaper.sh
 
