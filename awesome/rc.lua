@@ -22,9 +22,9 @@ require("awful.hotkeys_popup.keys")
 autorun = true
 autorunApps = 
 { 
-    "picom -b  --config ~/.config/picom/picom.conf &",
     "/home/luoyu/WallPapers/LaunchVideoWallpaper.sh",
     "$HOME/.config/polybar/launch.sh --forest",
+    "picom -b  --config ~/.config/picom/picom.conf &",
     "numlockx on",
     "fcitx5 -d",
 }
