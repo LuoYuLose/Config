@@ -284,6 +284,14 @@ globalkeys = gears.table.join(
         end,
         {description = "go back", group = "client"}),
 
+    -- 快捷启动
+    awful.key({ modkey,           }, "F1",     function () awful.spawn("firefox") end),
+    awful.key({ modkey,           }, "r",      function () awful.spawn("rofi -show drun") end),
+    awful.key({ modkey,           }, "m",      function () awful.spawn("/opt/YesPlayMusic/yesplaymusic") end),
+    awful.key({ modkey, "Shift"   }, "m",      function () awful.spawn("qqmusic") end),
+    awful.key({ "Mod1",           }, "l",      function () awful.spawn("i3lockblur") end),
+    awful.key({ "Mod1",           }, "c",      function () awful.spawn("$HOME/WallPapers/LaunchVideoWallpaper.sh") end),
+
     -- Standard program
     awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end,
               {description = "open a terminal", group = "launcher"}),
