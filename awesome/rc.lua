@@ -291,6 +291,14 @@ globalkeys = gears.table.join(
     awful.key({ "Mod1",           }, "l",      function () awful.spawn("i3lockblur") end),
     awful.key({ "Mod1",           }, "c",      function () awful.spawn("$HOME/WallPapers/LaunchVideoWallpaper.sh") end),
 
+    -- 媒体控制
+    awful.key({ },       "XF86AudioPlay",      function () awful.spawn("playerctl play-pause") end),
+    awful.key({ },       "XF86AudioStop",      function () awful.spawn("playerctl stop") end),
+    awful.key({ },       "XF86AudioPrev",      function () awful.spawn("playerctl previous") end),
+    awful.key({ },       "XF86AudioNext",      function () awful.spawn("playerctl next") end),
+    awful.key({ },       "XF86AudioRaiseVolume",      function () awful.spawn("pactl set-sink-volume 0 +10%") end),
+    awful.key({ },       "XF86AudioLowerVolume",      function () awful.spawn("pactl set-sink-volume 0 -5%") end),
+
     -- Standard program
     awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end,
               {description = "open a terminal", group = "launcher"}),
