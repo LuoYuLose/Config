@@ -20,9 +20,9 @@ require("awful.hotkeys_popup.keys")
 
 -- 自动启动
 autorun = true
-autorunApps = 
-{ 
-    "$HOME/.config/awesome/scripts/BarAfterWallpapers.sh",
+autorunApps =
+{
+    "$HOME/WallPapers/LaunchVideoWallpaper.sh",
     "picom -b  --config ~/.config/picom/picom.conf &",
     "numlockx on",
     "fcitx5 -d",
@@ -214,7 +214,20 @@ awful.screen.connect_for_each_screen(function(s)
 
     -- Create the wibox
     -- 禁用Wibar
-    s.mywibox = awful.wibar({ position = "top", screen = s, visible = false})
+    s.mywibox = awful.wibar({
+        position = "top",
+        screen = s,
+        visible = false})
+
+    function Sleep(n)
+        os.execute("sleep " .. n)
+    end
+
+    if awful.spawn("ps aux | grep xwinwrap | grep -v grep | wc -l") ~= 0
+    then
+        Sleep(1)
+        s.mywibox = awful.wibar({visible = true})
+    end
 
     -- Add widgets to the wibox
     s.mywibox:setup {
