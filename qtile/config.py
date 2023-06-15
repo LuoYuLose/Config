@@ -70,12 +70,12 @@ keys = [
     # Split = all windows displayed
     # Unsplit = 1 window displayed, like Max layout, but still with
     # multiple stack panes
-    Key(
-        [mod, "shift"],
-        "Return",
-        lazy.layout.toggle_split(),
-        desc="Toggle between split and unsplit sides of stack",
-    ),
+    # Key(
+    #     [mod, "shift"],
+    #     "Return",
+    #     lazy.layout.toggle_split(),
+    #     desc="Toggle between split and unsplit sides of stack",
+    # ),
     Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
     # Toggle between different layouts as defined below
     Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
@@ -89,6 +89,7 @@ keys = [
     Key([mod], "r", lazy.spawn("rofi -show drun"), desc="Rofi程序启动器"),
     Key([mod], "m", lazy.spawn("/opt/YesPlayMusic/yesplaymusic"), desc="网易云三方音乐播放器"),
     Key([mod, "Shift"], "m", lazy.spawn("qqmusic"), desc="QQ音乐"),
+    Key([mod, "Shift"], "Return", lazy.spawn("nautilus")),
     Key(["mod1"], "c", lazy.spawn("/home/luoyu/WallPapers/LaunchVideoWallpaper.sh")),
     Key(["mod1"], "l", lazy.spawn("i3lockblur"), desc="i3lock锁屏"),
 
@@ -128,12 +129,12 @@ for i in groups:
     )
 
 layouts = [
-    layout.Columns(
-        border_focus_stack=["#d75f5f", "#8f3d3d"], 
-        border_width=3,
-        margin = 10,
-    ),
-    layout.Max(),
+    # layout.Columns(
+    #     border_focus_stack=["#d75f5f", "#8f3d3d"], 
+    #     border_width=3,
+    #     margin = 10,
+    # ),
+    # layout.Max(),
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
     # layout.Bsp(),
@@ -141,47 +142,73 @@ layouts = [
     # layout.MonadTall(),
     # layout.MonadWide(),
     # layout.RatioTile(),
-    # layout.Tile(),
+    layout.Tile(
+        border_focus_stack=["#d75f5f", "#8f3d3d"], 
+        border_width=3,
+        margin = 10,
+    ),
     # layout.TreeTab(),
     # layout.VerticalTile(),
     # layout.Zoomy(),
 ]
 
+# Bar
+widget_defaults = dict(
+    font="Source Code Pro Semibold",
+    fontsize=18,
+    padding=6,
+    background = "#FDF5E6",
+    foreground = "000000",
+)
+extension_defaults = widget_defaults.copy()
+
+sep = widget.Sep(
+    foreground="2E3440",
+    padding=1,
+    linewidth=3,
+    size_percent=55,
+)
+
 screens = [
     Screen(
         top=bar.Bar(
-            [
-                widget.CurrentLayout(),
-                widget.GroupBox(),
-                widget.Prompt(),
-                widget.WindowName(),
-                widget.Chord(
-                    chords_colors={
-                        "launch": ("#ff0000", "#ffffff"),
-                    },
-                    name_transform=lambda name: name.upper(),
+             [
+                # widget.CurrentLayout(),
+                widget.GroupBox(
+                    background="#40e0d0",
+                    foreground="7FFFD4",
+                    highlight_method='block',
+                    active = "ff1493",
                 ),
-                widget.TextBox("default config", name="default"),
-                widget.TextBox("Press &lt;M-r&gt; to spawn", foreground="#d75f5f"),
+                sep,
+                widget.Prompt(
+                    foreground = "2E3440",
+                ),
+                widget.WindowName(),
+                # widget.Chord(
+                #     chords_colors={
+                #         "launch": ("#ffc0cb", "#ffffff"),
+                #     },
+                #     name_transform=lambda name: name.upper(),
+                # ),
+                # widget.TextBox("default config", name="default"),
+                # widget.TextBox("Press &lt;M-r&gt; to spawn", foreground="#d75f5f"),
                 # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
                 # widget.StatusNotifier(),
-                widget.Systray(),
                 widget.Clock(format="%Y-%m-%d %a %I:%M %p"),
-                widget.QuickExit(),
-            ],
-            24,
-            # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
-            # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
-        ),
+                widget.Systray(),
+                # widget.QuickExit(),
+             ],
+             24,
+             border_width=[4, 2, 2, 0],  # Draw top and bottom borders
+             border_color = "#FDF5E6",
+             # background="#f8f8ff",
+             # border_color="#faebd7",
+             # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
+         ),
     ),
 ]
  
-widget_defaults = dict(
-    font="Source Code Pro",
-    fontsize=18,
-    padding=3,
-)
-extension_defaults = widget_defaults.copy()
 
 # Drag floating layouts.
 mouse = [
@@ -199,12 +226,10 @@ floating_layout = layout.Floating(
     float_rules=[
         # Run the utility of `xprop` to see the wm class and name of an X client.
         *layout.Floating.default_float_rules,
-        Match(wm_class="confirmreset"),  # gitk
-        Match(wm_class="makebranch"),  # gitk
-        Match(wm_class="maketag"),  # gitk
-        Match(wm_class="ssh-askpass"),  # ssh-askpass
-        Match(title="branchdialog"),  # gitk
-        Match(title="pinentry"),  # GPG key password entry
+        Match(wm_class="yesplaymusic"),
+        Match(wm_class="steam"),
+        Match(wm_class="qqmusic"),
+        Match(wm_class="QQ"),
     ]
 )
 auto_fullscreen = True
