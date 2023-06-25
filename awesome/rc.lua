@@ -22,7 +22,7 @@ require("awful.hotkeys_popup.keys")
 autorun = true
 autorunApps =
 {
-    "$HOME/WallPapers/LaunchVideoWallpaper.sh",
+    "~/WallPapers/LaunchVideoWallpaper.sh",
     "picom -b  --config ~/.config/picom/picom.conf &",
     "numlockx on",
     "fcitx5 -d",
@@ -78,8 +78,8 @@ modkey = "Mod4"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
-    awful.layout.suit.floating,
     awful.layout.suit.tile,
+    awful.layout.suit.floating,
     -- awful.layout.suit.tile.left,
     -- awful.layout.suit.tile.bottom,
     -- awful.layout.suit.tile.top,
@@ -88,35 +88,13 @@ awful.layout.layouts = {
     -- awful.layout.suit.spiral,
     -- awful.layout.suit.spiral.dwindle,
     -- awful.layout.suit.max,
-    awful.layout.suit.max.fullscreen,
+    -- awful.layout.suit.max.fullscreen,
     -- awful.layout.suit.magnifier,
     -- awful.layout.suit.corner.nw,
     -- awful.layout.suit.corner.ne,
     -- awful.layout.suit.corner.sw,
     -- awful.layout.suit.corner.se,
 }
--- }}}
-
--- {{{ Menu
--- Create a launcher widget and a main menu
-myawesomemenu = {
-    { "hotkeys", function() hotkeys_popup.show_help(nil, awful.screen.focused()) end },
-    { "manual", terminal .. " -e man awesome" },
-    { "edit config", editor_cmd .. " " .. awesome.conffile },
-    { "restart", awesome.restart },
-    { "quit", function() awesome.quit() end },
-}
-
-mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
-                                    { "open terminal", terminal }
-                                  }
-                        })
-
-mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
-                                     menu = mymainmenu })
-
--- Menubar configuration
-menubar.utils.terminal = terminal -- Set the terminal for applications that require it
 -- }}}
 
 -- Keyboard map indicator and switcher
@@ -183,7 +161,7 @@ screen.connect_signal("property::geometry", set_wallpaper)
 
 awful.screen.connect_for_each_screen(function(s)
     -- Wallpaper
-    set_wallpaper(s)
+    -- set_wallpaper(s)
 
     -- Each screen has its own tag table.
     awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
@@ -219,6 +197,7 @@ awful.screen.connect_for_each_screen(function(s)
         screen = s,
         visible = false})
 
+    -- 确保Wibar在动态壁纸启动后显示
     function Sleep(n)
         os.execute("sleep " .. n)
     end
@@ -253,16 +232,12 @@ end)
 -- {{{ Key bindings
 globalkeys = gears.table.join(
     -- 暂时搁置
-    -- awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
-    --           {description="show help", group="awesome"}),
     -- awful.key({ modkey,           }, "Left",   awful.tag.viewprev,
     --           {description = "view previous", group = "tag"}),
     -- awful.key({ modkey,           }, "Right",  awful.tag.viewnext,
     --           {description = "view next", group = "tag"}),
     -- awful.key({ modkey,           }, "Escape", awful.tag.history.restore,
     --           {description = "go back", group = "tag"}),
-    -- awful.key({ modkey,           }, "w", function () mymainmenu:show() end,
-    --           {description = "show main menu", group = "awesome"}),
     -- awful.key({ modkey,           }, "u", awful.client.urgent.jumpto,
     --           {description = "jump to urgent client", group = "client"}),
 
@@ -313,20 +288,24 @@ globalkeys = gears.table.join(
         {description = "go back", group = "client"}),
 
     -- 快捷启动
-    awful.key({ modkey,           }, "F1",     function () awful.spawn("firefox") end),
+    awful.key({ modkey,           }, "F1",     function () awful.spawn("firefox") end,  {group = "client"}),
     awful.key({ modkey,           }, "r",      function () awful.spawn("rofi -show drun") end),
     awful.key({ modkey,           }, "m",      function () awful.spawn("/opt/YesPlayMusic/yesplaymusic") end),
     awful.key({ modkey, "Shift"   }, "m",      function () awful.spawn("qqmusic") end),
     awful.key({ "Mod1",           }, "l",      function () awful.spawn("i3lockblur") end),
-    awful.key({ "Mod1",           }, "c",      function () awful.spawn("$HOME/WallPapers/LaunchVideoWallpaper.sh") end),
+    awful.key({ "Mod1",           }, "c",      function () awful.spawn("/home/luoyu/WallPapers/LaunchVideoWallpaper.sh") end),
 
     -- 媒体控制
-    awful.key({ },       "XF86AudioPlay",      function () awful.spawn("playerctl play-pause") end),
-    awful.key({ },       "XF86AudioStop",      function () awful.spawn("playerctl stop") end),
-    awful.key({ },       "XF86AudioPrev",      function () awful.spawn("playerctl previous") end),
-    awful.key({ },       "XF86AudioNext",      function () awful.spawn("playerctl next") end),
-    awful.key({ },       "XF86AudioRaiseVolume",      function () awful.spawn("pactl set-sink-volume 0 +10%") end),
-    awful.key({ },       "XF86AudioLowerVolume",      function () awful.spawn("pactl set-sink-volume 0 -5%") end),
+    awful.key({},       "XF86AudioPlay",      function () awful.spawn("playerctl play-pause") end),
+    awful.key({},       "XF86AudioStop",      function () awful.spawn("playerctl stop") end),
+    awful.key({},       "XF86AudioPrev",      function () awful.spawn("playerctl previous") end),
+    awful.key({},       "XF86AudioNext",      function () awful.spawn("playerctl next") end),
+    awful.key({},       "XF86AudioRaiseVolume",      function () awful.spawn("pactl set-sink-volume 0 +10%") end),
+    awful.key({},       "XF86AudioLowerVolume",      function () awful.spawn("pactl set-sink-volume 0 -5%") end),
+
+    -- 亮度控制
+    awful.key({},       "XF86MonBrightnessUp",  function () awful.spawn("light -A 10") end),
+    awful.key({},       "XF86MonBrightnessDown",  function () awful.spawn("light -U 5") end),
 
     -- Standard program
     awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end,
@@ -353,7 +332,7 @@ globalkeys = gears.table.join(
     awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(-1)                end,
               {description = "select previous", group = "layout"}),
 
-    awful.key({ modkey, "Control" }, "n",
+    awful.key({ modkey,           }, "n",
               function ()
                   local c = awful.client.restore()
                   -- Focus restored client
@@ -363,12 +342,9 @@ globalkeys = gears.table.join(
                     )
                   end
               end,
-              {description = "restore minimized", group = "client"}),
+              {description = "restore minimized", group = "client"})
 
     -- Prompt
-    -- awful.key({ modkey },            "r",     function () awful.screen.focused().mypromptbox:run() end,
-    --           {description = "run prompt", group = "launcher"}),
-
     -- awful.key({ modkey }, "x",
     --           function ()
     --               awful.prompt.run {
@@ -380,8 +356,6 @@ globalkeys = gears.table.join(
     --           end,
     --           {description = "lua execute prompt", group = "awesome"}),
     -- Menubar（关了会报错，不懂
-    awful.key({ modkey }, "p", function() menubar.show() end,
-              {description = "show the menubar", group = "launcher"})
 )
 
 clientkeys = gears.table.join(
@@ -513,6 +487,8 @@ awful.rules.rules = {
      }
     },
 
+    { rule = { class = "firefox" }, properties = { maximized = false } },
+
     -- Floating clients.
     { rule_any = {
         instance = {
@@ -521,16 +497,11 @@ awful.rules.rules = {
           "pinentry",
         },
         class = {
-          "Arandr",
-          "Blueman-manager",
-          "Gpick",
-          "Kruler",
-          "MessageWin",  -- kalarm.
-          "Sxiv",
-          "Tor Browser", -- Needs a fixed window size to avoid fingerprinting by screen size.
-          "Wpa_gui",
-          "veromix",
-          "xtightvncviewer"},
+          "qqmusic",
+          "QQ",
+          "steam",
+          "yesplaymusic"
+        },
 
         -- Note that the name property shown in xprop might be set slightly after creation of the client
         -- and the name shown there might not match defined rules here.
