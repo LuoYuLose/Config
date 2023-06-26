@@ -18,6 +18,7 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
+
 -- 自动启动
 autorun = true
 autorunApps =
@@ -63,6 +64,12 @@ end
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
 beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
+
+-- 设置间距
+beautiful.useless_gap = 6
+
+-- 行高测试
+-- beautiful.
 
 -- This is used later as the default terminal and editor to run.
 terminal = "kitty"
@@ -191,13 +198,10 @@ awful.screen.connect_for_each_screen(function(s)
     }
 
     -- Create the wibox
-    -- 禁用Wibar
-    s.mywibox = awful.wibar({
-        position = "top",
-        screen = s,
-        visible = false})
+    -- Wibar大体配置
+    s.mywibox = awful.wibar({visible = false})
 
-    -- 确保Wibar在动态壁纸启动后显示
+    -- 确保Wibar在动态壁纸启动后显示（如果需要更改Wibar属性请在这栏修改
     function Sleep(n)
         os.execute("sleep " .. n)
     end
@@ -205,7 +209,11 @@ awful.screen.connect_for_each_screen(function(s)
     if awful.spawn("ps aux | grep xwinwrap | grep -v grep | wc -l") ~= 0
     then
         Sleep(1)
-        s.mywibox = awful.wibar({visible = true})
+        s.mywibox = awful.wibar({
+          height = 24,
+          position = "top",
+          screen = s,
+          visible = true})
     end
 
     -- Add widgets to the wibox
@@ -476,7 +484,8 @@ root.keys(globalkeys)
 awful.rules.rules = {
     -- All clients will match this rule.
     { rule = { },
-      properties = { border_width = beautiful.border_width,
+      properties = { -- border_width = beautiful.border_width,
+                     border_width = beautiful.border_width,
                      border_color = beautiful.border_normal,
                      focus = awful.client.focus.filter,
                      raise = true,
