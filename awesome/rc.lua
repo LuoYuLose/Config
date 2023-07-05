@@ -68,9 +68,6 @@ beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
 -- 设置间距
 beautiful.useless_gap = 6
 
--- 行高测试
--- beautiful.
-
 -- This is used later as the default terminal and editor to run.
 terminal = "kitty"
 editor = os.getenv("EDITOR") or "nvim"
@@ -171,7 +168,7 @@ awful.screen.connect_for_each_screen(function(s)
     -- set_wallpaper(s)
 
     -- Each screen has its own tag table.
-    awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
+    awful.tag({ "1", "2", "3", "4", "5"}, s, awful.layout.layouts[1])
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
@@ -302,6 +299,7 @@ globalkeys = gears.table.join(
     awful.key({ modkey, "Shift"   }, "m",      function () awful.spawn("qqmusic") end),
     awful.key({ "Mod1",           }, "l",      function () awful.spawn("i3lockblur") end),
     awful.key({ "Mod1",           }, "c",      function () awful.spawn("/home/luoyu/WallPapers/LaunchVideoWallpaper.sh") end),
+    awful.key({},       "Print",               function () awful.spawn("flameshot gui") end),
 
     -- 媒体控制
     awful.key({},       "XF86AudioPlay",      function () awful.spawn("playerctl play-pause") end),
