@@ -218,14 +218,14 @@ awful.screen.connect_for_each_screen(function(s)
         layout = wibox.layout.align.horizontal,
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
-            mylauncher,
+            -- mylauncher,
             s.mytaglist,
-            s.mypromptbox,
+            -- s.mypromptbox,
         },
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
-            mykeyboardlayout,
+            -- mykeyboardlayout,
             wibox.widget.systray(),
             mytextclock,
             s.mylayoutbox,
@@ -294,6 +294,7 @@ globalkeys = gears.table.join(
 
     -- 快捷启动
     awful.key({ modkey,           }, "F1",     function () awful.spawn("firefox") end,  {group = "client"}),
+    awful.key({ modkey, "Shift"   }, "Return", function () awful.spawn("thunar") end,  {group = "client"}),
     awful.key({ modkey,           }, "r",      function () awful.spawn("rofi -show drun") end),
     awful.key({ modkey,           }, "m",      function () awful.spawn("/opt/YesPlayMusic/yesplaymusic") end),
     awful.key({ modkey, "Shift"   }, "m",      function () awful.spawn("qqmusic") end),
@@ -338,7 +339,7 @@ globalkeys = gears.table.join(
     awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(-1)                end,
               {description = "select previous", group = "layout"}),
 
-    awful.key({ modkey,           }, "n",
+    awful.key({ modkey, "Shift"   }, "n",
               function ()
                   local c = awful.client.restore()
                   -- Focus restored client
@@ -389,7 +390,7 @@ clientkeys = gears.table.join(
             c.minimized = true
         end ,
         {description = "minimize", group = "client"}),
-    awful.key({ modkey,           }, "m",
+    awful.key({ "Control",        }, "m",
         function (c)
             c.maximized = not c.maximized
             c:raise()
@@ -401,7 +402,7 @@ clientkeys = gears.table.join(
             c:raise()
         end ,
         {description = "(un)maximize vertically", group = "client"}),
-    awful.key({ modkey, "Shift"   }, "m",
+    awful.key({ "control", "Shift" }, "m",
         function (c)
             c.maximized_horizontal = not c.maximized_horizontal
             c:raise()
@@ -494,7 +495,7 @@ awful.rules.rules = {
      }
     },
 
-    { rule = { class = "firefox" }, properties = { maximized = false } },
+    { rule = { class = "firefox", "thunar" }, properties = { maximized = false } },
 
     -- Floating clients.
     { rule_any = {
