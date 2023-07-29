@@ -207,7 +207,7 @@ awful.screen.connect_for_each_screen(function(s)
     then
         Sleep(1)
         s.mywibox = awful.wibar({
-          height = 24,
+          height = 25,
           position = "top",
           screen = s,
           visible = true})
@@ -298,6 +298,7 @@ globalkeys = gears.table.join(
     awful.key({ modkey,           }, "r",      function () awful.spawn("rofi -show drun") end),
     awful.key({ modkey,           }, "m",      function () awful.spawn("/opt/YesPlayMusic/yesplaymusic") end),
     awful.key({ modkey, "Shift"   }, "m",      function () awful.spawn("qqmusic") end),
+    awful.key({ modkey, "Control" }, "m",      function () awful.spawn("netease-cloud-music") end),
     awful.key({ "Mod1",           }, "l",      function () awful.spawn("i3lockblur") end),
     awful.key({ "Mod1",           }, "c",      function () awful.spawn("/home/luoyu/WallPapers/LaunchVideoWallpaper.sh") end),
     awful.key({},       "Print",               function () awful.spawn("flameshot gui") end),
@@ -402,7 +403,7 @@ clientkeys = gears.table.join(
             c:raise()
         end ,
         {description = "(un)maximize vertically", group = "client"}),
-    awful.key({ "control", "Shift" }, "m",
+    awful.key({ "control", "Mod1" }, "m",
         function (c)
             c.maximized_horizontal = not c.maximized_horizontal
             c:raise()
@@ -505,6 +506,7 @@ awful.rules.rules = {
           "pinentry",
         },
         class = {
+          "netease-cloud-music",
           "qqmusic",
           "QQ",
           "steam",

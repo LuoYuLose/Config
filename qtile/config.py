@@ -52,7 +52,7 @@ keys = [
     Key([mod], "l", lazy.layout.right(), desc="Move focus to right"),
     Key([mod], "j", lazy.layout.down(), desc="Move focus down"),
     Key([mod], "k", lazy.layout.up(), desc="Move focus up"),
-    Key([mod], "space", lazy.layout.next(), desc="Move window focus to other window"),
+    Key([mod], "c", lazy.layout.next(), desc="Move window focus to other window"),
     # Move windows between left/right columns or move up/down in current stack.
     # Moving out of range in Columns layout will create new column.
     Key([mod, "shift"], "h", lazy.layout.shuffle_left(), desc="Move window to the left"),
@@ -76,22 +76,24 @@ keys = [
     #     lazy.layout.toggle_split(),
     #     desc="Toggle between split and unsplit sides of stack",
     # ),
-    Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
+    Key([mod], "Return", lazy.spawn(terminal)),
     # Toggle between different layouts as defined below
     Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
     Key([mod], "q", lazy.window.kill(), desc="Kill focused window"),
+    Key([mod], "Space", lazy.window.toggle_floating()),
     # 禁用热重载，避免bar出现问题
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     # Key([mod], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
     # 程序启动配置
-    Key([mod], "F1", lazy.spawn("firefox"), desc="火狐浏览器"),
-    Key([mod], "r", lazy.spawn("rofi -show drun"), desc="Rofi程序启动器"),
-    Key([mod], "m", lazy.spawn("/opt/YesPlayMusic/yesplaymusic"), desc="网易云三方音乐播放器"),
-    Key([mod, "Shift"], "m", lazy.spawn("qqmusic"), desc="QQ音乐"),
+    Key([mod], "F1", lazy.spawn("firefox")),
+    Key([mod], "r", lazy.spawn("rofi -show drun")),
+    Key([mod], "m", lazy.spawn("/opt/YesPlayMusic/yesplaymusic")),
+    Key([mod, "Shift"], "m", lazy.spawn("qqmusic")),
     Key([mod, "Shift"], "Return", lazy.spawn("nautilus")),
     Key(["mod1"], "c", lazy.spawn("/home/luoyu/WallPapers/LaunchVideoWallpaper.sh")),
-    Key(["mod1"], "l", lazy.spawn("i3lockblur"), desc="i3lock锁屏"),
+    Key(["mod1"], "l", lazy.spawn("i3lockblur")),
+    Key([], "Print", lazy.spawn("flameshot gui")),
 
     # 音频控制
     Key([], "XF86AudioPlay", lazy.spawn("playerctl play-pause")),
@@ -100,9 +102,13 @@ keys = [
     Key([], "XF86AudioNext", lazy.spawn("playerctl next")),
     Key([], "XF86AudioRaiseVolume", lazy.spawn("pactl set-sink-volume 0 +10%")),
     Key([], "XF86AudioLowerVolume", lazy.spawn("pactl set-sink-volume 0 -5%")),
+
+    # 亮度控制
+    Key([], "XF86MonBrightnessUp", lazy.spawn("light -A 10")),
+    Key([], "XF86MonBrightnessDown", lazy.spawn("light -U 5")),
 ]
 
-groups = [Group(i) for i in "123456789"]
+groups = [Group(i) for i in "12345"]
 
 for i in groups:
     keys.extend(
@@ -143,9 +149,10 @@ layouts = [
     # layout.MonadWide(),
     # layout.RatioTile(),
     layout.Tile(
-        border_focus_stack=["#d75f5f", "#8f3d3d"], 
-        border_width=3,
-        margin = 10,
+        # border_focus_stack=["#d75f5f", "#8f3d3d"], 
+        border_focus_stack=["#00ffff"], 
+        border_width=1,
+        margin = 8,
     ),
     # layout.TreeTab(),
     # layout.VerticalTile(),
@@ -154,10 +161,10 @@ layouts = [
 
 # Bar
 widget_defaults = dict(
-    font="Source Code Pro Semibold",
+    font="MesloLGS Nerd Font",
     fontsize=18,
     padding=6,
-    background = "#FDF5E6",
+    background = "#fff0f5cc",
     foreground = "000000",
 )
 extension_defaults = widget_defaults.copy()
@@ -175,7 +182,7 @@ screens = [
              [
                 # widget.CurrentLayout(),
                 widget.GroupBox(
-                    background="#40e0d0",
+                    background="#add8e6cc",
                     foreground="7FFFD4",
                     highlight_method='block',
                     active = "ff1493",
@@ -184,7 +191,29 @@ screens = [
                 widget.Prompt(
                     foreground = "2E3440",
                 ),
-                widget.WindowName(),
+                widget.WindowName(
+                    background="#00fa9acc",
+                    empty_group_string = "虚空",
+                ),
+                sep,
+                widget.CPUGraph(
+                    background = "#f08080cc",
+                    border_color = "#f08080",
+                ),
+                widget.CPU(
+                    background = "#f08080cc",
+                    format = "CPU {freq_current}GHz {load_percent}%",
+                ),
+                sep,
+                widget.MemoryGraph(
+                    background = "#ffdeadcc",
+                    border_color = "#ffdead",
+                ),
+                widget.Memory(
+                    background = "#ffdeadcc",
+                    measure_mem = "G",
+                    format = "Mem {MemUsed: .0f}{mm}/{MemTotal: .0f}{mm}",
+                ),
                 # widget.Chord(
                 #     chords_colors={
                 #         "launch": ("#ffc0cb", "#ffffff"),
@@ -195,8 +224,15 @@ screens = [
                 # widget.TextBox("Press &lt;M-r&gt; to spawn", foreground="#d75f5f"),
                 # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
                 # widget.StatusNotifier(),
-                widget.Clock(format="%Y-%m-%d %a %I:%M %p"),
-                widget.Systray(),
+                sep,
+                widget.Clock(
+                    format="%Y-%m-%d %a %I:%M %p",
+                    background = "#e6e6facc",
+                ),
+                sep,
+                widget.Systray(
+                    background = "#ffd700cc",
+                ),
                 # widget.QuickExit(),
              ],
              24,
